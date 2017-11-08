@@ -12,8 +12,7 @@ class TopNetflix::CLI
   end
 
   def list_shows   #this will scrape our website and list each show by name each.do
-    puts "1. Stranger Things"
-    puts "2. Life in Pieces"
+    @shows = TopNetflix::Shows.Today
   end
 
   def user_choice
