@@ -1,9 +1,27 @@
 class TopNetflix::Shows
-  attr_accessor :name, :release_date, :pros, :cons, :plot
+  attr_accessor :name, :release_date, :plot, :pros, :cons
 
   def self.Today
-  #  puts "1. Stranger Things"
-  #  puts "2. Life in Pieces"
+    url = "https://www.huffingtonpost.com/entry/netflix-streamline_us_59f9e246e4b046017fb05974"
+    html = open(url)
+    doc = Nokogiri::HTML(html)
+    binding.pry
+    i = 0
+    until i > 8
+      show = self.new
+      show.name = doc.css(".card__badge")[i].text
+      show.release_date = doc.css(".card__headline")[i].text #release date
+      show_details = doc.css(".card__description")[i].text
+      show_details.split(".")
+      show.plot = show_details[0]
+      show.pros = show_details[1]
+      show.cons = show_details[2]
+      binding.pry
+      i += 1
+    end
+
+
+
 
     show_1 = self.new
     show_1.name = "Stranger Things"
