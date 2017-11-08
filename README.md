@@ -2,10 +2,13 @@
 CLI Gem providing current top 8 Netflix shows to stream
 
 # TopNetflix
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/top_netflix`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This gem describes the top 8 shows currently streaming on Netflix from the website: https://www.huffingtonpost.com/entry/netflix-streamline_us_59f9e246e4b046017fb05974
+This will provide the following info:
+1) Name of Show
+2) Season air date
+3) Pros
+4) Cons
+5) Plot
 
 ## Installation
 
