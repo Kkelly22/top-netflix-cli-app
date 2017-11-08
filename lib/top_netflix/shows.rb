@@ -5,18 +5,16 @@ class TopNetflix::Shows
     url = "https://www.huffingtonpost.com/entry/netflix-streamline_us_59f9e246e4b046017fb05974"
     html = open(url)
     doc = Nokogiri::HTML(html)
-    binding.pry
     i = 0
     until i > 8
       show = self.new
       show.name = doc.css(".card__badge")[i].text
-      show.release_date = doc.css(".card__headline")[i].text #release date
+      show.release_date = doc.css(".card__headline")[i].text
       show_details = doc.css(".card__description")[i].text
-      show_details.split(".")
-      show.plot = show_details[0]
-      show.pros = show_details[1]
-      show.cons = show_details[2]
-      binding.pry
+      show_details_formatted = show_details.split.join(" ").gsub("\u00A0", " ")
+      show.plot = show_details_formatted.split(".")[0]
+      show.pros = show_details_formatted.split(".")[1]
+      show.cons = show_details_formatted.split(".")[2]
       i += 1
     end
 
