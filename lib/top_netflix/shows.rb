@@ -13,13 +13,26 @@ class TopNetflix::Shows
     i = 0
     until i > 7
       show = self.new
+    #Name
       show.name = doc.css(".card__badge")[i].text
+    #Release Date
       show.release_date = doc.css(".card__headline")[i].text
-      show_details = doc.css(".card__description")[i].text
-      show_details_formatted = show_details.split.join(" ").gsub("\u00A0", " ")
-      show.plot = show_details_formatted.split(".")[0]
-      show.pros = show_details_formatted.split(".")[1]
-      show.cons = show_details_formatted.split(".")[2]
+    #Plot
+      input_string = doc.css(".card__description")[i].text.gsub("\u00A0 ", "\u00A0")
+      str1_markerstring = "Plot:"
+      str2_markerstring = "Pro:"
+      show.plot = input_string[/#{str1_markerstring}(.*?)#{str2_markerstring}/m, 1]
+    #Pros
+      input_string = doc.css(".card__description")[i].text.gsub("\u00A0 ", "\u00A0")
+      str1_markerstring = "Pro:"
+      str2_markerstring = "Con:"
+      show.pros = input_string[/#{str1_markerstring}(.*?)#{str2_markerstring}/m, 1]
+    #Cons
+      input_string = doc.css(".card__description")[i].text.gsub("\u00A0 ", "\u00A0")
+      str1_markerstring = "Con:"
+      str2_markerstring = "\n"
+      show.cons = input_string[/#{str1_markerstring}(.*?)#{str2_markerstring}/m, 1]
+
       show_array << show
       i += 1
     end
