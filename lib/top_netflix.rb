@@ -1,7 +1,4 @@
-require "nokogiri"
-require "pry"
-require "open-uri"
+module TopNetflix
+end
 
-require_relative "./top_netflix/version"
-require_relative "./top_netflix/cli"
-require_relative "./top_netflix/shows"
+require_relative '../config/environment'
