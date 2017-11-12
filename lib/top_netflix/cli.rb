@@ -14,7 +14,7 @@ class TopNetflix::CLI
   end
 
   def list_shows
-    Shows.all.each do  |show|
+    TopNetflix::Shows.all.each do  |show|
       puts "#{show.name}"
     end
     puts ""
@@ -28,7 +28,7 @@ class TopNetflix::CLI
       show = TopNetflix::Shows.find(input.to_i)
 
       if input.to_i > 0 && show != nil
-        print_show
+        print_show(show)
       elsif input == "list"
         list_shows
       elsif input == "exit"
@@ -39,7 +39,7 @@ class TopNetflix::CLI
     end
   end
 
-  def print_show
+  def print_show(show)
     puts "#{show.name} - #{show.release_date}"
     puts "Plot: #{show.plot}"
     puts "Pros: #{show.pros}"
