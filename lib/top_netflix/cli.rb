@@ -12,7 +12,7 @@ class TopNetflix::CLI
     puts "--------------------------------------"
   end
 
-  def list_shows   #this will scrape our website and list each show by name each.do
+  def list_shows
     @shows = TopNetflix::Shows.Today
     @shows.each do  |show|
       puts "#{show.name}"
@@ -26,7 +26,7 @@ class TopNetflix::CLI
       puts "To view more information, please choose a show (1-8). To see the options, type list. To exit, type exit."
       input = gets.strip.downcase
 
-      if input.to_i > 0 && input.to_i < 9
+      if input.to_i > 0 && @shows[input.to_i - 1] != nil
         the_show = @shows[input.to_i - 1]
         puts "#{the_show.name} - #{the_show.release_date}"
         puts "Plot: #{the_show.plot}"
@@ -36,7 +36,7 @@ class TopNetflix::CLI
       elsif input == "list"
         list_shows
       elsif input == "exit"
-        puts "Happy streaming!"
+        puts "Happy Streaming!"
       else
         puts "Not sure what you mean, try again."
       end

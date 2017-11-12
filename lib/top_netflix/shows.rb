@@ -11,7 +11,7 @@ class TopNetflix::Shows
 
     show_array = []
     i = 0
-    until i > 7
+    until doc.css(".card__badge")[i] == nil
       show = self.new
     #Name
       show.name = doc.css(".card__badge")[i].text
