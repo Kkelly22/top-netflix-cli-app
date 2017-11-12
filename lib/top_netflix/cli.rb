@@ -13,8 +13,8 @@ class TopNetflix::CLI
   end
 
   def list_shows
-    @shows = TopNetflix::Shows.Today
-    @shows.each do  |show|
+    TopNetflix::Scraper.make_shows
+    Shows.all.each do  |show|
       puts "#{show.name}"
     end
     puts ""
@@ -28,11 +28,7 @@ class TopNetflix::CLI
 
       if input.to_i > 0 && @shows[input.to_i - 1] != nil
         the_show = @shows[input.to_i - 1]
-        puts "#{the_show.name} - #{the_show.release_date}"
-        puts "Plot: #{the_show.plot}"
-        puts "Pros: #{the_show.pros}"
-        puts "Cons: #{the_show.cons}"
-        puts ""
+        print_show
       elsif input == "list"
         list_shows
       elsif input == "exit"
@@ -41,6 +37,14 @@ class TopNetflix::CLI
         puts "Not sure what you mean, try again."
       end
     end
+  end
+
+  def print_show
+    puts "#{the_show.name} - #{the_show.release_date}"
+    puts "Plot: #{the_show.plot}"
+    puts "Pros: #{the_show.pros}"
+    puts "Cons: #{the_show.cons}"
+    puts ""
   end
 
 end
