@@ -2,6 +2,7 @@ class TopNetflix::CLI
 
   def call
     welcome
+    TopNetflix::Scraper.make_shows
     list_shows
     user_choice
   end
@@ -13,7 +14,6 @@ class TopNetflix::CLI
   end
 
   def list_shows
-    TopNetflix::Scraper.make_shows
     Shows.all.each do  |show|
       puts "#{show.name}"
     end
