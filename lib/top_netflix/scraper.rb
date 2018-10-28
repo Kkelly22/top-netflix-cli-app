@@ -1,14 +1,15 @@
 class TopNetflix::Scraper
 
   def self.make_shows
-    url = "https://www.huffingtonpost.com/entry/netflix-streamline_us_59f9e246e4b046017fb05974"
+ 	url = "https://www.pastemagazine.com/articles/2018/01/the-75-best-tv-shows-on-netflix-2018.html?p=2"
     doc = Nokogiri::HTML(open(url))
 
     i = 0
-    until doc.css(".card__badge")[i] == nil
-      TopNetflix::Shows.new_from_doc(doc, i)
-      i += 1
+    j = 2
+  	until  doc.css(".grid-container p")[i] == nil
+      TopNetflix::Shows.new_from_doc(doc, i, j)
+      i += 3
+      j += 3
     end
   end
-
 end

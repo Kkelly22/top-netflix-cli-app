@@ -1,27 +1,25 @@
 class TopNetflix::Shows
-  attr_accessor :name, :release_date, :plot, :pros, :cons
+  attr_accessor :name, :creator, :cast, :plot
 
   @@all = []
 
-  def self.new_from_doc(doc, i)
-    plot_string = capture_plot(doc, i)
-    pros_string = capture_pros(doc, i)
-    cons_string = capture_cons(doc, i)
+  def self.new_from_doc(doc, i, j)
+    creator_string = capture_creator(doc, i)
+    cast_string = capture_cast(doc, i)
+    plot_string = capture_plot(doc, j)
     self.new(
-      doc.css(".card__badge")[i].text,
-      doc.css(".card__headline")[i].text,
-      plot_string,
-      pros_string,
-      cons_string
+      doc.css(".grid-container p")[i].text.gsub(/[0-9.]/,"").gsub("\r\n    ",""),
+      creator_string,
+      cast_string,
+      plot_string
       )
   end
 
-  def initialize(name = nil, release_date = nil, plot = nil, pros = nil, cons = nil)
+  def initialize(name = nil, creator = nil, cast = nil, plot = nil)
     @name = name
-    @release_date = release_date
+    @creator = creator
+    @cast = cast
     @plot = plot
-    @pros = pros
-    @cons = cons
     @@all << self
   end
 
@@ -33,25 +31,42 @@ class TopNetflix::Shows
     @@all[i - 1]
   end
 
-  def self.capture_plot(doc, i)
-    input_string = doc.css(".card__description")[i].text.gsub("\u00A0 ", "\u00A0")
-    str1_markerstring = "Plot:"
-    str2_markerstring = "Pro:"
+  def self.capture_creator(doc, i)
+    input_string = doc.css(".grid-container p")[i+1].text
+    if input_string.include? "Creators:"
+      str1_markerstring = "Creators:"
+    else
+      str1_markerstring = "Creator:"
+    end
+
+    if input_string.include? "Stars:"
+      str2_markerstring = "Stars:"
+    else
+      str2_markerstring = "Star:"
+    end
+
     input_string[/#{str1_markerstring}(.*?)#{str2_markerstring}/m, 1]
   end
 
-  def self.capture_pros(doc, i)
-    input_string = doc.css(".card__description")[i].text.gsub("\u00A0 ", "\u00A0")
-    str1_markerstring = "Pro:"
-    str2_markerstring = "Con:"
+  def self.capture_cast(doc, i)
+     input_string = doc.css(".grid-container p")[i+1].text
+     if input_string.include? "Stars:"
+      str1_markerstring = "Stars:"
+     else
+      str1_markerstring = "Star:"
+     end
+
+     if input_string.include? "Networks:"
+       str2_markerstring = "Networks:"
+     else
+      str2_markerstring = "Network:"
+    end
+
     input_string[/#{str1_markerstring}(.*?)#{str2_markerstring}/m, 1]
   end
 
-  def self.capture_cons(doc, i)
-    input_string = doc.css(".card__description")[i].text.gsub("\u00A0 ", "\u00A0")
-    str1_markerstring = "Con:"
-    str2_markerstring = "\n"
-    input_string[/#{str1_markerstring}(.*?)#{str2_markerstring}/m, 1]
+  def self.capture_plot(doc, j)
+    input_string = doc.css(".grid-container p")[j].text.gsub("\r\n      ", "")
   end
 
 end

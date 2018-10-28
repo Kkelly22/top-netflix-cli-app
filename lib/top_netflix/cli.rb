@@ -23,7 +23,7 @@ class TopNetflix::CLI
   def user_choice
     input = " "
     while input != "exit"
-      puts "To view more information, please choose a show (1-8). To see the options, type list. To exit, type exit."
+      puts "To view more information, please choose a show (1-25). To see the options, type list. To exit, type exit."
       input = gets.strip.downcase
       show = TopNetflix::Shows.find(input.to_i)
 
@@ -40,10 +40,10 @@ class TopNetflix::CLI
   end
 
   def print_show(show)
-    puts "#{show.name} - #{show.release_date}"
+    puts "Show: #{show.name}"
+    puts "Creator: #{show.creator}"
+    puts "Cast: #{show.cast}"
     puts "Plot: #{show.plot}"
-    puts "Pros: #{show.pros}"
-    puts "Cons: #{show.cons}"
     puts ""
   end
 
